@@ -12,7 +12,7 @@ for python_books_all in range(1):
         url = soup.find_all('a')[book]['href']
         url = 'https://www.piter.com' + url
         list_of_books.append([title, url])
-with open ('/Users/macbook/PythonProjects/LPproject/teamwork_webapp_parser/books.csv', 'w', encoding='utf-8') as out:
+with open ('/Users/macbook/PythonProjects/LPproject/teamwork_webapp_parser/list_books.csv', 'w', encoding='utf-8') as out:
     for book in list_of_books:
         book=str(book)
         book=book.replace('\"', '')
