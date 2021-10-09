@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Data mining. Извлечение информации из Facebook, Twit...",
+    "author": "Рассел М.",
+    "price": "550 р.",
+    "url": "https://www.piter.com/collection/all/product/data-mining-izvlechenie-informatsii-iz-facebook-twitter-linkedin-instagram-github"
+  },
+  {
+    "title": "Head First. Kotlin",
+    "author": "Гриффитс Д.",
+    "price": "1585 р.",
+    "url": "https://www.piter.com/collection/all/product/head-first-kotlin"
+  },
+  {
+    "title": "Глубокое обучение в картинках. Визуальный гид по иск...",
+    "author": "Крон Д.",
+    "price": "1318 р.",
+    "url": "https://www.piter.com/collection/all/product/glubokoe-obuchenie-v-kartinkah-vizualnyy-gid-po-iskusstvennomu-intellektu"
+  },
+  {
+    "title": "BPF для мониторинга Linux",
+    "author": "Калавера Д.",
+    "price": "1132 р.",
+    "url": "https://www.piter.com/collection/all/product/bpf-dlya-monitoringa-linux"
+  },
+  {
+    "title": "Машинное обучение",
+    "author": "Бринк Х.",
+    "price": "550 р.",
+    "url": "https://www.piter.com/collection/all/product/mashinnoe-obuchenie"
+  },
+  {
+    "title": "Разработка с использованием квантовых компьютеров",
+    "author": "Силва В.",
+    "price": "1597 р.",
+    "url": "https://www.piter.com/collection/all/product/razrabotka-s-ispolzovaniem-kvantovyh-kompyuterov"
+  },
+  {
+    "title": "Глубокое обучение на R",
+    "author": "Шолле Ф.",
+    "price": "550 р.",
+    "url": "https://www.piter.com/collection/all/product/glubokoe-obuchenie-na-r"
+  },
+  {
+    "title": "Эффективный C. Профессиональное программирование",
+    "author": "Сикорд Р.",
+    "price": "1440 р.",
+    "url": "https://www.piter.com/collection/all/product/effektivnyy-c-professionalnoe-programmirovanie"
+  }
+]
