@@ -6,9 +6,10 @@ from requests.api import request
 d = input ('введите данные для формирования списка книг по тематике: ')
 URL=('https://www.piter.com/collection/all?q='+(d)+'&r46_search_query=дети&r46_input_query='+(d))
 HEADERS = {'user_agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 YaBrowser/21.8.0.1716 Yowser/2.5 Safari/537.36', 'accept': '*/*'}
-list_of_books = []
+books = []
 HOST = 'https://www.piter.com'
 FILE = 'books.json'
+
 
 def get_html(url, params=None):
     r = requests.get(url, headers=HEADERS, params=params)
@@ -27,7 +28,6 @@ def get_pages_count(html):
 def get_content(html):
     soup = BeautifulSoup(html, 'html.parser')
     items = soup.find('div', class_='products-list'). find_all('div')
-    books = []
     for item in items:
         title = item.find('span', {'class': 'title'})
         author = item.find('span', {'class': 'author'})
@@ -41,8 +41,8 @@ def get_content(html):
             'price': price.text.strip(),
             'url': HOST + url['href']
         })
-        with open ('books.json', 'w', encoding='utf-8') as file:
-            json.dump(books, file, indent=2, ensure_ascii=False)
+    with open('books.json', 'w', encoding='utf-8') as file:
+        json.dump(books, file, indent=2, ensure_ascii=False)
     return books
 
 
@@ -55,10 +55,9 @@ def parse():
             print(f'Парсинг страницы {page} из {pages_count}...')
             html = get_html(URL, params={'page': page})
             books.extend(get_content(html.text))
-        print(f'получено {len (books)} книг')
+        print(f'получено {len (books)} книг')  # доработать, показывает некорректное кол-во
     else:
         print('Ошибка. По запросу нет данных.')
-
 
 
 parse()
