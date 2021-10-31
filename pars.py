@@ -156,7 +156,7 @@ if __name__ == '__main__':
     r = requests.post(
         'http://127.0.0.1:5000/get-books/',
         json=piter_books,
-        headers={'Authorization': 'test'},
+        headers={'Authorization': 'test'},  # TODO: Вынести это в config файл (секретный ключ)
     )
 
     print(r.json())
