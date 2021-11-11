@@ -1,8 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-import json
 
-KEYWORDS = ('Python', )  # Можно вынести в конфиг, категории книг!
+KEYWORDS = ('Python', 'JavaScript', 'Java')  # Можно вынести в конфиг, категории книг!
 
 
 def get_html(url, params=None):
@@ -89,74 +88,11 @@ if __name__ == '__main__':
             }
             books[category][number] = book_info
 
-
-    # print(books)
     piter_books = {'Питер': books}
-    json_dict = json.dumps(piter_books, indent=4)
-    # print(json_dict)
-    # print(type(json_dict))
-
-
-    # print(json.loads(json_dict))
-
-    params = {
-        'get_json': json_dict
-    }
-
-    # requests.post(f'http://127.0.0.1:5000/get-json-books/{json_dict}')
-
-    a = {'asd': 1}
-
-    b = json.dumps(a, indent=4)
-
-    # requests.post(f"http://127.0.0.1:5000/get-json-books/?asd=123")
-
-    cccc = {
-      "language": "Python",
-      "framework": "Flask",
-      "website": "Scotch",
-      "version_info": {
-        "python": "3.9.0",
-        "flask": "1.1.2"
-      },
-      "examples": ["query", "form", "json"],
-      "boolean_test": True
-    }
-
-    # requests.post(f"http://127.0.0.1:5000/get-books/", json=cccc)
-
-    ab = 'Популярность Python продолжает расти, а значит, проекты, ' \
-         'созданные на этом языке программирования, становятся все масштабнее и сложнее. ' \
-         'Многие разработчики проявляют интерес к высокоуровневым паттернам проектирования,' \
-         ' таким как чистая и событийно-управляемая архитектура и паттерны предметно-ориентированного проектирования (DDD). ' \
-         'Но их адаптация под Python не всегда очевидна. Гарри Персиваль и Боб Грегори познакомят вас с проверенными паттернами, ' \
-         'чтобы каждый питонист мог управлять сложностью приложений и получать максимальную отдачу от тестов. ' \
-         'Теория подкреплена примерами на чистом Python, лишенном синтаксической избыточности Java и C. ' \
-         'В этой книге:•\t«Инверсия зависимостей» и ее связи с портами и адаптерами (гексагональная/чистая архитектура).•\tРазличия между паттернами' \
-         ' «Сущность», «Объект-значение» и «Агрегат» в рамках DDD.•\tПаттерны «Репозиторий» и UoW, обеспечивающие постоянство хранения данных.•\tПаттерны «Событие»,' \
-         ' «Команда» и «Шина сообщений».•\tРазделение ответственности на команды и запросы (CQRS).•\tСобытийно-управляемая архитектура и реактивные расширения.'
-
-
-    aaaa = {21: {'title': 'Паттерны разработки на Python: TDD, DDD и событийно-ориентированная архитектура',
-                 'authors': ['Персиваль Г.', 'Грегори Б.'], 'year': '2022', 'price': '1045 р.',
-                 'description': ab,
-                 'iamge': 'https://static-sl.insales.ru/images/products/1/5229/453669997/44611468.jpg', 'isbn': '978-5-4461-1468-9'}}
-
-
-
-
-    # print(json.loads(json_dict))
-
-    # asd = {1: '#'}
-    #
-    # json_dict = json.dumps(asd, indent=4)
-    #
-    # requests.post(f"http://127.0.0.1:5000/get-books-try/?key=222&json_dict={json_dict}")
 
     r = requests.post(
         'http://127.0.0.1:5000/get-books/',
         json=piter_books,
         headers={'Authorization': 'test'},  # TODO: Вынести это в config файл (секретный ключ)
     )
-
     print(r.json())
