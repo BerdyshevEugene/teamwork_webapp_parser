@@ -1,21 +1,69 @@
 import requests
+import json
 from bs4 import BeautifulSoup
-list_of_books = []
+from requests.api import request
 
-for python_books_all in range(1):
-    url = 'https://www.piter.com/collection/all?page_size=100&order=&q=python&only_available=true'
-    par = {'p': python_books_all}
-    r = requests.get(url, params=par)
-    soup = BeautifulSoup(r.text, 'html.parser') 
-    for book in range(44):
-        title = soup.find_all('span', class_="title")[book].get_text()
-        url = soup.find_all('a')[book]['href']
-        url = 'https://www.piter.com' + url
-        list_of_books.append([title, url])
-with open ('/Users/macbook/PythonProjects/LPproject/teamwork_webapp_parser/books.csv', 'w', encoding='utf-8') as out:
-    for book in list_of_books:
-        book=str(book)
-        book=book.replace('\"', '')
-        book=book.replace('[', '')
-        book=book.replace(']', '')
-        out.write(book + '\n')
+d = input('введите данные для формирования списка книг по тематике: ')
+URL=('https://www.piter.com/collection/all?q='+(d)+'&r46_search_query='+(d)+'&r46_input_query='+(d))
+HEADERS = {'user_agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 YaBrowser/21.8.0.1716 Yowser/2.5 Safari/537.36', 'accept': '*/*'}
+books = []
+urls = []
+HOST = 'https://www.piter.com'
+FILE = 'books.json'
+
+
+def get_html(url, params=None):
+    try:
+        result = requests.get(url, params=params)
+        result.raise_for_status()
+        return result.text
+    except(requests.RequestException, ValueError):
+        print('Сетевая ошибка')
+        return
+
+
+def get_pages_count(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    pagination = soup.find('div', class_='pagination right clear').find_all('a', href=True)
+    if pagination:
+        return int (pagination[-2].get_text())
+    else:
+        return 1
+
+
+def get_content(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    items = soup.find('div', class_='products-list'). find_all('div')
+    for item in items:
+        title = item.find('span', {'class': 'title'})
+        author = item.find('span', {'class': 'author'})
+        price = item.find('span', {'class': 'price'})
+        url = item.find('a', href=True)
+        if None in (title, author, price, url):
+            continue
+        urls.append({
+            'url': HOST + url['href']
+        })
+        books.append({
+            'title': title.text.strip(),
+            'author': author.text.strip(),
+            'price': price.text.strip(),
+            'url': HOST + url['href']
+        })
+    with open('books.json', 'w', encoding='utf-8') as file:
+        json.dump(books, file, indent=2, ensure_ascii=False)
+    return books
+
+
+def parse():
+    html = get_html(URL)
+    books = []
+    pages_count = get_pages_count(html)
+    for page in range(1, pages_count + 1):
+        print(f'Парсинг страницы {page} из {pages_count}...')
+        html = get_html(URL, params={'page': page})
+        books.extend(get_content(html))
+    print(f'получено {len (books)} книг')  # доработать, показывает некорректное кол-во
+
+
+parse()
